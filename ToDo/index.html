@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fanni's ToDo List</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <style>
+    body {
+  background-image: url('duck.jpg');
+  background-size: cover; 
+  background-repeat: no-repeat; 
+}
+    #todo-list, #completed-list {
+      list-style-type: none;
+      padding: 0;
+      width: 50%;
+      margin: 0 auto; /* center the lists */
+    }
+    #todo-list li, #completed-list li {
+      margin: 5px 0;
+      padding: 5px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+      display: flex; 
+      justify-content: space-between; 
+    }
+    #toggle-todo-list, #toggle-completed-list {
+      display: block; 
+      width: 50%; 
+      margin: 10px auto; 
+    }
+    .task-text {
+      flex-grow: 1; 
+      text-align: center; 
+    }
+  </style>
+</head>
+<body>   <!-- just some boooring html stuff -->
+  <div>
+    <input id="new-task" type="text" placeholder="enter your ToDo">
+    <button id="add-task">Add to the list</button>
+  </div>
+  <div>
+    <button id="toggle-todo-list">Show/Hide ToDo List</button>
+    <ul id="todo-list"></ul>
+  </div>
+  <div>
+    <button id="toggle-completed-list">Show/Hide Completed Tasks</button>
+    <ul id="completed-list"></ul>
+  </div>
+
+<script>
+  $('#add-task').click(function() { // Add a new task when the button is clicked
+    var newTask = $('#new-task').val(); // Get the value of the input field
+    var taskText = $('<div class="task-text">').text(newTask); // and create new div for the tasktext
+    var listItem = $('<li>').append(deleteButton, taskText, doneButton); // Create a new list item with the task text and buttons
+    
+    
+        if(newTask !== '') { // If the input field is not empty
+      var listItem = $('<li>').text(newTask); // erstelle a new list item with the input val
+      var deleteButton = $('<button>').text('Delete').click(function() { //new delete buttton
+        listItem.remove(); //remove the list item, but it is eindeutig, oder?
+      });
+      var doneButton = $('<button>').text('Done').click(function() { //just a done button
+        listItem.appendTo('#completed-list'); //move the list item to the completed-list box, one box down
+        doneButton.remove(); //remove the done buttonnn
+      });
+      listItem.append(deleteButton, doneButton); //append the delete and done button to the list item
+      listItem.appendTo('#todo-list'); //append the list item to the todo-list box thingy
+      $('#new-task').val(''); // Clear the input field, ready for new einträge
+    }
+  });
+
+  $("#todo-list, #completed-list").sortable(); // make the lists sortable, so you can grab and move them
+
+  $('#new-task').keypress(function(e) { // it was nervig immer auf den button zu klicken, also BITTE, enter works too
+  if(e.which == 13) { // 13 is the key code for Enter
+    $('#add-task').click(); // click the add task button yeah
+  }
+});
+ 
+// hide and seek games
+  $('#toggle-todo-list').click(function() { //again, when the button is cliiiicked
+    $('#todo-list').toggle(); //toggle means to show or hide the list
+  });
+  $('#toggle-completed-list').click(function() { //aaand again, when the button is cliiiicked
+    $('#completed-list').toggle(); //toggle it
+
+    
+  });
+</script>
+</body>
+</html>
